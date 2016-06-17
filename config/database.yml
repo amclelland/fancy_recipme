@@ -1,0 +1,18 @@
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  pool: 5
+
+development:
+  <<: *default
+  database: fancy_recipme_development
+
+test:
+  <<: *default
+  database: fancy_recipme_test
+
+production:
+  <<: *default
+  database: fancy_recipme_production
+  username: fancy_recipme
+  password: <%= ENV['FANCY_RECIPME_DATABASE_PASSWORD'] %>
