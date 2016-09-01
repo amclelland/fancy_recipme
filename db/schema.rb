@@ -11,16 +11,41 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160617031444) do
+ActiveRecord::Schema.define(version: 20160831222219) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "ingredients", force: :cascade do |t|
+    t.string   "listable_type"
+    t.integer  "listable_id"
+    t.string   "name"
+    t.decimal  "quantity"
+    t.string   "quantity_units"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+    t.index ["listable_type", "listable_id"], name: "index_ingredients_on_listable_type_and_listable_id", using: :btree
+  end
+
+  create_table "lists", force: :cascade do |t|
+    t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "meals", force: :cascade do |t|
     t.string   "name"
     t.string   "image"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+  end
+
+  create_table "planned_meals", force: :cascade do |t|
+    t.integer  "meal_id"
+    t.integer  "day_of_week"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.index ["meal_id"], name: "index_planned_meals_on_meal_id", using: :btree
   end
 
 end
